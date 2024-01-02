@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Todolist, { sleep } from "./Todolist.component";
-import { TodoItem } from "./types";
+import { TodoItem } from "../types";
 
 describe.skip("Todolist Component", () => {
   const fakeTodo = [{ id: "0", text: "Salade" } as TodoItem];
