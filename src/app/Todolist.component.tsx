@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ViewModel from "./viewmodel";
 import { useSignalEffect } from "@preact/signals-react";
+import "./todolist.css";
 
 const VM = new ViewModel();
 
