@@ -1,4 +1,4 @@
-import { TodolistType } from "./types";
+import { TodolistType } from "../types";
 
 export const GlobalState = {
   list: [] as TodolistType,

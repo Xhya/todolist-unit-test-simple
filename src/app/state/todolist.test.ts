@@ -1,6 +1,6 @@
-import RepositoryMock from "./repositoryMock";
-import { TodoItem } from "./types";
-import ViewModel from "./viewmodel";
+import RepositoryMock from "../repositoryMock";
+import { TodoItem } from "../types";
+import ViewModel from "../component/viewmodel";
 
 describe("todolist tests", () => {
   let repository: RepositoryMock
