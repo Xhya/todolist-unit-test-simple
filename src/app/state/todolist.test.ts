@@ -1,4 +1,4 @@
-import RepositoryMock from "../repositoryMock";
+import RepositoryMock from "../repository/repositoryMock";
 import { TodoItem } from "../types";
 import ViewModel from "../component/viewmodel";
 

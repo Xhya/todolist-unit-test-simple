@@ -1,5 +1,5 @@
 import { RepositoryInterface } from "./repositoryInterface";
-import { TodolistType } from "./types";
+import { TodolistType } from "../types";
 
 export default class RepositoryMock implements RepositoryInterface {
   private currentId = "0";

@@ -1,6 +1,6 @@
 import { DeepSignal } from "deepsignal/react";
-import Repository from "../repository";
-import { RepositoryInterface } from "../repositoryInterface";
+import Repository from "../repository/repository";
+import { RepositoryInterface } from "../repository/repositoryInterface";
 import { TodolistType } from "../types";
 import { globalStateObservable } from "../state/globalState.observable";
 

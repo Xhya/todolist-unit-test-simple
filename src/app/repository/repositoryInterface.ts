@@ -1,4 +1,4 @@
-import { TodolistType } from "./types";
+import { TodolistType } from "../types";
 
 export interface RepositoryInterface {
     getList: () => Promise<TodolistType>;
