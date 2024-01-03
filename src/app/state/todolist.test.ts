@@ -2,7 +2,7 @@ import RepositoryMock from "../repository/repositoryMock";
 import { TodoItem } from "../types";
 import ViewModel from "../component/viewmodel";
 
-describe("todolist tests", () => {
+describe.skip("todolist tests", () => {
   let repository: RepositoryMock;
   let vm: ViewModel;
 

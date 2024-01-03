@@ -2,7 +2,7 @@ import { DeepSignal } from "deepsignal/react";
 import Repository from "../repository/repository";
 import { RepositoryInterface } from "../repository/repositoryInterface";
 import { TodolistType } from "../types";
-import { state } from "../state/State";
+import { state } from "../state/state";
 
 export type ViewModelState = {
   list: TodolistType;

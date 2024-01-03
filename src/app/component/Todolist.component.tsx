@@ -4,7 +4,6 @@ import { useSignalEffect } from "@preact/signals-react";
 import "./todolist.css";
 import { TodolistType } from "../types";
 import { TodoItem } from "../types";
-import { act } from "react-dom/test-utils";
 
 function Todolist() {
   const [input, setInput] = useState("");
@@ -17,9 +16,7 @@ function Todolist() {
     async function fetchData() {
       const response = await fetch("./data.json");
       const json = await response.json();
-      act(() => {
-        setList(json);
-      });
+      setList(json);
     }
     fetchData();
   }, []);
@@ -31,7 +28,7 @@ function Todolist() {
       setIsLoading(true);
       const response = await fetch("./data_add.json");
       const json = await response.json();
-      await sleep(1500);
+      await sleep(1000);
       setList(json);
       setIsLoading(false);
       setInput("");
