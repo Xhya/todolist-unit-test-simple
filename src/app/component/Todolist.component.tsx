@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ViewModel from "./viewmodel";
 import { useSignalEffect } from "@preact/signals-react";
 import "./todolist.css";
-import { TodolistType } from "./types";
+import { TodolistType } from "../types";
 import { TodoItem } from "../types";
 import { act } from "react-dom/test-utils";
 

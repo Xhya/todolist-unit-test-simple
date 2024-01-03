@@ -2,9 +2,9 @@ import { DeepSignal } from "deepsignal/react";
 import Repository from "../repository/repository";
 import { RepositoryInterface } from "../repository/repositoryInterface";
 import { TodolistType } from "../types";
-import { globalStateObservable } from "../state/globalState.observable";
+import { state } from "../state/State";
 
-export type State = {
+export type ViewModelState = {
   list: TodolistType;
   input: string;
   isLoading: boolean;
@@ -18,24 +18,24 @@ export default class ViewModel {
     this.repository = repository;
   }
 
-  state: DeepSignal<State> = globalStateObservable;
+  viewModelState: DeepSignal<ViewModelState> = state;
 
   async fetchData() {
     const list = await this.repository.getList();
-    this.state.list = list;
+    this.viewModelState.list = list;
   }
 
-  async addItem(text: string) {
-    if (text) {
-      this.state.isLoading = true;
-      const list = await this.repository.addItem(text);
-      this.state.list = list;
-      this.state.input = "";
-      this.state.isLoading = false;
+  async addItem() {
+    if (this.viewModelState.input) {
+      this.viewModelState.isLoading = true;
+      const list = await this.repository.addItem(this.viewModelState.input);
+      this.viewModelState.list = list;
+      this.viewModelState.input = "";
+      this.viewModelState.isLoading = false;
     }
   }
 
   onUpdateInput(input: string) {
-    this.state.input = input;
+    this.viewModelState.input = input;
   }
 }

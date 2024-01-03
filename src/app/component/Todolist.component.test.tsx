@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Todolist, { sleep } from "./Todolist.component";
-import { TodoItem } from "../types";
 import RepositoryMock from "../repository/repositoryMock";
 
 describe("Todolist Component", () => {
@@ -27,7 +26,7 @@ describe("Todolist Component", () => {
   }
 
   function renderComponent() {
-    render(<Todolist repository={repository}/>);
+    render(<Todolist />);
   }
 
   it("displays initial list", async () => {
