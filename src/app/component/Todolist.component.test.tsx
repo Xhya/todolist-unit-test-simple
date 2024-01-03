@@ -6,9 +6,9 @@ import RepositoryMock from "../repository/repositoryMock";
 describe("Todolist Component", () => {
   const repository = new RepositoryMock();
 
-  const fakeTodo = [{ id: "0", text: "Salade" } as TodoItem];
+  const fakeTodo = [{ id: "0", text: "Un item" } as TodoItem];
   const fakeTodoAdd = [
-    { id: "0", text: "Salade" },
+    { id: "0", text: "Un item" },
     { id: "1", text: "Tomate" },
   ];
 
@@ -27,14 +27,14 @@ describe("Todolist Component", () => {
   }
 
   function renderComponent() {
-    render(<Todolist />);
+    render(<Todolist repository={repository}/>);
   }
 
   it("displays initial list", async () => {
     mockFetch();
 
     renderComponent();
-    expect(await screen.findByText("Salade")).toBeInTheDocument();
+    expect(await screen.findByText("Un item")).toBeInTheDocument();
   });
 
   it("disabled button", async () => {
