@@ -3,13 +3,7 @@ import Repository from "../repository/repository";
 import { RepositoryInterface } from "../repository/repositoryInterface";
 import { TodolistType } from "../types";
 import { state } from "../state/state";
-
-export type ViewModelState = {
-  list: TodolistType;
-  input: string;
-  isLoading: boolean;
-  isAddButtonDisabled: boolean;
-};
+import { deepSignal } from "deepsignal/react";
 
 export default class ViewModel {
   repository: RepositoryInterface;
@@ -18,7 +12,12 @@ export default class ViewModel {
     this.repository = repository;
   }
 
-  viewModelState: DeepSignal<ViewModelState> = state;
+  viewModelState: DeepSignal<{
+    list: TodolistType;
+    input: string;
+    isLoading: boolean;
+    isAddButtonDisabled: boolean;
+  }> = deepSignal(state);
 
   async fetchData() {
     const list = await this.repository.getList();

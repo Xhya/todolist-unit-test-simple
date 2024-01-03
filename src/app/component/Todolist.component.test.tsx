@@ -3,6 +3,8 @@ import Todolist, { sleep } from "./Todolist.component";
 import RepositoryMock from "../repository/repositoryMock";
 import { TodoItem } from "../types";
 
+const repository = new RepositoryMock()
+
 describe("Todolist Component", () => {
   function mockFetch() {
     jest.spyOn(global, "fetch").mockImplementation((url) =>
@@ -28,23 +30,21 @@ describe("Todolist Component", () => {
     render(<Todolist />);
   }
 
-  it("displays initial list", async () => {
+  beforeEach(() => {
     mockFetch();
+  })
 
+  it("displays initial list", async () => {
     renderComponent();
     expect(await screen.findByText("Un item")).toBeInTheDocument();
   });
 
   it("disabled button", async () => {
-    mockFetch();
-
     renderComponent();
     expect(await screen.findByText("Ajouter")).toBeDisabled();
   });
 
   it("enabled button", async () => {
-    mockFetch();
-
     renderComponent();
     const input = await screen.findByTestId("input");
     fireEvent.change(input, { target: { value: "Tomate" } });
@@ -52,15 +52,11 @@ describe("Todolist Component", () => {
   });
 
   it("loading state", async () => {
-    mockFetch();
-
     renderComponent();
     expect(await screen.findByText("Ajouter")).toBeInTheDocument();
   });
 
   it("add item", async () => {
-    mockFetch();
-
     renderComponent();
     const input = await screen.findByTestId("input");
     fireEvent.change(input, { target: { value: "Tomate" } });

@@ -28,7 +28,7 @@ describe.skip("todolist tests", () => {
   it("loading state", async () => {
     repository.keepLoadState = true;
     vm.onUpdateInput("Deux items");
-    await vm.addItem();
+    vm.addItem();
     expect(vm.viewModelState.isLoading).toEqual(true);
   });
 
