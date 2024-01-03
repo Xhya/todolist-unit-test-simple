@@ -1,10 +1,16 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Todolist, { sleep } from "./Todolist.component";
 import { TodoItem } from "../types";
+import RepositoryMock from "../repository/repositoryMock";
 
-describe.skip("Todolist Component", () => {
+describe("Todolist Component", () => {
+  const repository = new RepositoryMock();
+
   const fakeTodo = [{ id: "0", text: "Salade" } as TodoItem];
-  const fakeTodoAdd = [{ id: "0", text: "Salade" }, { id: "1", text: "Tomate" }];
+  const fakeTodoAdd = [
+    { id: "0", text: "Salade" },
+    { id: "1", text: "Tomate" },
+  ];
 
   function mockFetch() {
     jest.spyOn(global, "fetch").mockImplementation((url) =>
@@ -20,24 +26,28 @@ describe.skip("Todolist Component", () => {
     );
   }
 
+  function renderComponent() {
+    render(<Todolist />);
+  }
+
   it("displays initial list", async () => {
     mockFetch();
 
-    render(<Todolist />);
+    renderComponent();
     expect(await screen.findByText("Salade")).toBeInTheDocument();
   });
 
   it("disabled button", async () => {
     mockFetch();
 
-    render(<Todolist />);
+    renderComponent();
     expect(await screen.findByText("Ajouter")).toBeDisabled();
   });
 
   it("enabled button", async () => {
     mockFetch();
 
-    render(<Todolist />);
+    renderComponent();
     const input = await screen.findByTestId("input");
     fireEvent.change(input, { target: { value: "Tomate" } });
     expect(await screen.findByText("Ajouter")).toBeEnabled();
@@ -46,14 +56,14 @@ describe.skip("Todolist Component", () => {
   it("loading state", async () => {
     mockFetch();
 
-    render(<Todolist />);
+    renderComponent();
     expect(await screen.findByText("Ajouter")).toBeInTheDocument();
   });
 
   it("add item", async () => {
     mockFetch();
 
-    render(<Todolist />);
+    renderComponent();
     const input = await screen.findByTestId("input");
     fireEvent.change(input, { target: { value: "Tomate" } });
 

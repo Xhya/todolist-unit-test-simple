@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import ViewModel from "./viewmodel";
 import { useSignalEffect } from "@preact/signals-react";
 import "./todolist.css";
-import { TodolistType } from "../types";
+import { TodolistType } from "./types";
+import { TodoItem } from "../types";
+import { act } from "react-dom/test-utils";
 
 function Todolist() {
   const [input, setInput] = useState("");
@@ -15,7 +17,9 @@ function Todolist() {
     async function fetchData() {
       const response = await fetch("./data.json");
       const json = await response.json();
-      setList(json);
+      act(() => {
+        setList(json);
+      });
     }
     fetchData();
   }, []);
@@ -27,7 +31,7 @@ function Todolist() {
       setIsLoading(true);
       const response = await fetch("./data_add.json");
       const json = await response.json();
-      await sleep(2000);
+      await sleep(1500);
       setList(json);
       setIsLoading(false);
       setInput("");
@@ -36,7 +40,7 @@ function Todolist() {
 
   // Ne pas autoriser l'ajout d'un item si aucun mot écrit
   const onUpdateInput = (newInput: string) => {
-    if (input) {
+    if (newInput) {
       setIsAddButtonDisabled(false);
     } else {
       setIsAddButtonDisabled(true);
@@ -58,7 +62,7 @@ function Todolist() {
         </button>
       </div>
       <div className="list">
-        {(list as TodolistType).map((item) => (
+        {list.map((item: TodoItem) => (
           <div className="item" key={item.text + item.id}>
             <span>{item.text}</span>
           </div>
