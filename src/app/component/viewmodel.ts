@@ -3,7 +3,6 @@ import Repository from "../repository/repository";
 import { RepositoryInterface } from "../repository/repositoryInterface";
 import { TodolistType } from "../types";
 import { state } from "../state/state";
-import { deepSignal } from "deepsignal/react";
 
 export default class ViewModel {
   repository: RepositoryInterface;
@@ -17,24 +16,24 @@ export default class ViewModel {
     input: string;
     isLoading: boolean;
     isAddButtonDisabled: boolean;
-  }> = deepSignal(state);
+  }> = state;
 
   async fetchData() {
     const list = await this.repository.getList();
-    this.viewModelState.list = list;
+    state.list = list;
   }
 
   async addItem() {
-    if (this.viewModelState.input) {
-      this.viewModelState.isLoading = true;
-      const list = await this.repository.addItem(this.viewModelState.input);
-      this.viewModelState.list = list;
-      this.viewModelState.input = "";
-      this.viewModelState.isLoading = false;
+    if (state.input) {
+      state.isLoading = true;
+      const list = await this.repository.addItem(state.input);
+      state.list = list;
+      state.input = "";
+      state.isLoading = false;
     }
   }
 
   onUpdateInput(input: string) {
-    this.viewModelState.input = input;
+    state.input = input;
   }
 }
