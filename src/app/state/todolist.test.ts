@@ -17,12 +17,19 @@ describe.skip("todolist tests", () => {
   });
 
   it("disabled button", async () => {
-    expect(vm.viewModelState.isAddButtonDisabled).toEqual(true);
+    expect(vm.viewModelState.isButtonDisabled).toEqual(true);
   });
 
   it("enabled button", async () => {
     vm.onUpdateInput("123");
-    expect(vm.viewModelState.isAddButtonDisabled).toEqual(false);
+    expect(vm.viewModelState.isButtonDisabled).toEqual(false);
+  });
+
+  it("re disabled button", async () => {
+    vm.onUpdateInput("123");
+    expect(vm.viewModelState.isButtonDisabled).toEqual(false);
+    vm.onUpdateInput("");
+    expect(vm.viewModelState.isButtonDisabled).toEqual(true);
   });
 
   it("loading state", async () => {
@@ -61,5 +68,5 @@ describe.skip("todolist tests", () => {
   });
 
   const getItemValueList = () =>
-    Object.values(vm.viewModelState.list).map((item: TodoItem) => item.text);
+    Object.values(vm.viewModelState.itemList).map((item: TodoItem) => item.text);
 });

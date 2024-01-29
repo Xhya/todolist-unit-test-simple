@@ -1,11 +1,11 @@
 import { deepSignal } from "deepsignal/react";
-import { TodolistType } from "../types";
+import { Todo } from "../types";
 
 export const state = deepSignal({
-  list: [] as TodolistType,
+  itemList: [] as Todo,
   input: "",
   isLoading: false,
-  get isAddButtonDisabled(): boolean {
+  get isButtonDisabled(): boolean {
     return !!!this.input;
   },
 });

@@ -1,7 +1,7 @@
-import { TodolistType } from "../types";
+import { Todo } from "../types";
 
 export interface RepositoryInterface {
-    getList: () => Promise<TodolistType>;
-    addItem: (text: string) => Promise<TodolistType>;
+    getList: () => Promise<Todo>;
+    addItem: (text: string) => Promise<Todo>;
   }
   

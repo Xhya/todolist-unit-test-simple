@@ -3,5 +3,5 @@ export type TodoItem = {
   text: string;
 };
 
-export type TodolistType = TodoItem[];
+export type Todo = TodoItem[];
 

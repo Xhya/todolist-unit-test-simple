@@ -1,9 +1,9 @@
 import { RepositoryInterface } from "./repositoryInterface";
-import { TodolistType } from "../types";
+import { Todo } from "../types";
 
 export default class RepositoryMock implements RepositoryInterface {
   private currentId = "0";
-  private _list: TodolistType = [
+  private _list: Todo = [
     {
       id: this.currentId,
       text: "Un item",
@@ -12,7 +12,7 @@ export default class RepositoryMock implements RepositoryInterface {
 
   keepLoadState = false;
 
-  getList(): Promise<TodolistType> {
+  getList(): Promise<Todo> {
     return new Promise((resolve) => {
       if (!this.keepLoadState) {
         setTimeout(() => resolve(this._list), 500);
@@ -21,7 +21,7 @@ export default class RepositoryMock implements RepositoryInterface {
   }
 
   addItem(text: string) {
-    return new Promise<TodolistType>((resolve) => {
+    return new Promise<Todo>((resolve) => {
       if (!this.keepLoadState) {
         const nextId = (parseInt(this.currentId) + 1).toString();
         const item = { text, id: nextId };

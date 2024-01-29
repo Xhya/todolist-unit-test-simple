@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import ViewModel from "./viewmodel";
 import { useSignalEffect } from "@preact/signals-react";
 import "./todolist.css";
-import { TodolistType } from "../types";
+import { Todo } from "../types";
 import { TodoItem } from "../types";
 import { RepositoryInterface } from "../repository/repositoryInterface";
 
 function Todolist() {
   const [input, setInput] = useState("");
-  const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(true);
+  const [isButtonDisabled, setButtonDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [list, setList] = useState<TodolistType>([]);
+  const [list, setList] = useState<Todo>([]);
 
   // Afficher l'état initial
   useEffect(() => {
@@ -24,7 +24,7 @@ function Todolist() {
 
   // Rajouter un item
   // Afficher un état de chargement
-  const onClickValidate = async () => {
+  const onClickAddButton = async () => {
     if (input) {
       setIsLoading(true);
       const response = await fetch("./data_add.json");
@@ -39,9 +39,9 @@ function Todolist() {
   // Ne pas autoriser l'ajout d'un item si aucun mot écrit
   const onUpdateInput = (newInput: string) => {
     if (newInput) {
-      setIsAddButtonDisabled(false);
+      setButtonDisabled(false);
     } else {
-      setIsAddButtonDisabled(true);
+      setButtonDisabled(true);
     }
     setInput(newInput);
   };
@@ -54,7 +54,7 @@ function Todolist() {
           value={input}
           onChange={(event) => onUpdateInput(event.target.value)}
         />
-        <button onClick={onClickValidate} disabled={isAddButtonDisabled}>
+        <button onClick={onClickAddButton} disabled={isButtonDisabled}>
           {!isLoading && "Ajouter"}
           {isLoading && "..."}
         </button>
