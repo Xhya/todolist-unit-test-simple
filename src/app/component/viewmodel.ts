@@ -18,12 +18,12 @@ export default class ViewModel {
     isButtonDisabled: boolean;
   }> = state;
 
-  async fetchData() {
+  async onInit() {
     const list = await this.repository.getList();
     state.itemList = list;
   }
 
-  async addItem() {
+  async onClickAddbutton() {
     if (state.input) {
       state.isLoading = true;
       const list = await this.repository.addItem(state.input);
