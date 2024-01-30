@@ -4,6 +4,12 @@ import { RepositoryInterface } from "../repository/repositoryInterface";
 import { Todo } from "../types";
 import { state } from "../state/state";
 
+export type ViewModelState = {
+  itemList: Todo;
+  input: string;
+  isLoading: boolean;
+  isButtonDisabled: boolean;
+}
 export default class ViewModel {
   repository: RepositoryInterface;
 
@@ -11,12 +17,7 @@ export default class ViewModel {
     this.repository = repository;
   }
 
-  viewModelState: DeepSignal<{
-    itemList: Todo;
-    input: string;
-    isLoading: boolean;
-    isButtonDisabled: boolean;
-  }> = state;
+  viewModelState: DeepSignal<ViewModelState> = state;
 
   async onInit() {
     const list = await this.repository.getList();

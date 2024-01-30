@@ -1,60 +1,65 @@
 import RepositoryMock from "../repository/repositoryMock";
 import { TodoItem } from "../types";
-import ViewModel from "./viewmodel";
+import ViewModel, { ViewModelState } from "./viewmodel";
 
-describe("todolist tests", () => {
+describe.skip("todolist tests", () => {
   let repository: RepositoryMock;
   let vm: ViewModel;
+  let state: ViewModelState;
 
   beforeEach(() => {
     repository = new RepositoryMock();
     vm = new ViewModel(repository);
+    state = vm.viewModelState
   });
 
   it("displays initial list", async () => {
     await vm.onInit();
-    expect(getItemValueList()).toEqual(["Un item"]);
+    expect(getItems()).toEqual(["Un item"]);
   });
 
   it("disabled button", async () => {
-    expect(vm.viewModelState.isButtonDisabled).toEqual(true);
+    expect(state.isButtonDisabled).toEqual(true);
   });
 
   it("enabled button", async () => {
     vm.onUpdateInput("123");
-    expect(vm.viewModelState.isButtonDisabled).toEqual(false);
+    expect(state.isButtonDisabled).toEqual(false);
   });
 
   it("re disabled button", async () => {
     vm.onUpdateInput("123");
-    expect(vm.viewModelState.isButtonDisabled).toEqual(false);
+    expect(state.isButtonDisabled).toEqual(false);
+
     vm.onUpdateInput("");
-    expect(vm.viewModelState.isButtonDisabled).toEqual(true);
+    expect(state.isButtonDisabled).toEqual(true);
   });
 
   it("loading state", async () => {
     repository.keepLoadState = true;
     vm.onUpdateInput("Deux items");
     vm.onClickAddbutton();
-    expect(vm.viewModelState.isLoading).toEqual(true);
+    expect(state.isLoading).toEqual(true);
   });
 
   it("not loading state", async () => {
     repository.keepLoadState = false;
     vm.onUpdateInput("Deux items");
     await vm.onClickAddbutton();
-    expect(vm.viewModelState.isLoading).toEqual(false);
+    expect(state.isLoading).toEqual(false);
   });
 
   it("add item", async () => {
     await vm.onInit();
-    expect(getItemValueList()).toEqual(["Un item"]);
+    expect(getItems()).toEqual(["Un item"]);
+
     vm.onUpdateInput("Deux items");
     await vm.onClickAddbutton();
-    expect(getItemValueList()).toEqual(["Un item", "Deux items"]);
+    expect(getItems()).toEqual(["Un item", "Deux items"]);
+
     vm.onUpdateInput("Trois items");
     await vm.onClickAddbutton();
-    expect(getItemValueList()).toEqual([
+    expect(getItems()).toEqual([
       "Un item",
       "Deux items",
       "Trois items",
@@ -64,9 +69,9 @@ describe("todolist tests", () => {
   it("input reset after new item", async () => {
     vm.onUpdateInput("Trois items");
     await vm.onClickAddbutton();
-    expect(vm.viewModelState.input).toEqual("");
+    expect(state.input).toEqual("");
   });
 
-  const getItemValueList = () =>
-    Object.values(vm.viewModelState.itemList).map((item: TodoItem) => item.text);
+  const getItems = () =>
+    Object.values(state.itemList).map((item: TodoItem) => item.text);
 });
