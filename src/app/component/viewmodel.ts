@@ -9,7 +9,7 @@ export type ViewModelState = {
   input: string;
   isLoading: boolean;
   isButtonDisabled: boolean;
-}
+};
 export default class ViewModel {
   repository: RepositoryInterface;
 
@@ -17,24 +17,31 @@ export default class ViewModel {
     this.repository = repository;
   }
 
-  viewModelState: DeepSignal<ViewModelState> = state;
+  viewModelState: DeepSignal<ViewModelState> = {
+    itemList: state.itemList,
+    input: "",
+    isLoading: false,
+    get isButtonDisabled(): boolean {
+      return !!!this.input;
+    },
+  };
 
   async onInit() {
     const list = await this.repository.getList();
-    state.itemList = list;
+    this.viewModelState.itemList = list;
   }
 
   async onClickAddbutton() {
-    if (state.input) {
-      state.isLoading = true;
-      const list = await this.repository.addItem(state.input);
+    if (this.viewModelState.input) {
+      this.viewModelState.isLoading = true;
+      const list = await this.repository.addItem(this.viewModelState.input);
       state.itemList = list;
-      state.input = "";
-      state.isLoading = false;
+      this.viewModelState.input = "";
+      this.viewModelState.isLoading = false;
     }
   }
 
   onUpdateInput(input: string) {
-    state.input = input;
+    this.viewModelState.input = input;
   }
 }
