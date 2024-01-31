@@ -10,7 +10,7 @@ describe.skip("todolist tests", () => {
   beforeEach(() => {
     repository = new RepositoryMock();
     vm = new ViewModel(repository);
-    state = vm.viewModelState
+    state = vm.viewModelState;
   });
 
   it("displays initial list", async () => {
@@ -59,17 +59,15 @@ describe.skip("todolist tests", () => {
 
     vm.onUpdateInput("Trois items");
     await vm.onClickAddbutton();
-    expect(getItems()).toEqual([
-      "Un item",
-      "Deux items",
-      "Trois items",
-    ]);
+    expect(getItems()).toEqual(["Un item", "Deux items", "Trois items"]);
   });
 
   it("input reset after new item", async () => {
     vm.onUpdateInput("Trois items");
     await vm.onClickAddbutton();
     expect(state.input).toEqual("");
+    expect(state.isLoading).toEqual(false);
+    expect(state.isButtonDisabled).toEqual(true);
   });
 
   const getItems = () =>

@@ -18,7 +18,9 @@ export default class ViewModel {
   }
 
   viewModelState: DeepSignal<ViewModelState> = deepSignal({
-    itemList: state.itemList,
+    get itemList() {
+      return state.itemList;
+    },
     input: "",
     isLoading: false,
     get isButtonDisabled(): boolean {
