@@ -1,4 +1,4 @@
-import { DeepSignal } from "deepsignal/react";
+import { DeepSignal, deepSignal } from "deepsignal/react";
 import Repository from "../repository/repository";
 import { RepositoryInterface } from "../repository/repositoryInterface";
 import { Todo } from "../types";
@@ -17,18 +17,18 @@ export default class ViewModel {
     this.repository = repository;
   }
 
-  viewModelState: DeepSignal<ViewModelState> = {
+  viewModelState: DeepSignal<ViewModelState> = deepSignal({
     itemList: state.itemList,
     input: "",
     isLoading: false,
     get isButtonDisabled(): boolean {
       return !!!this.input;
     },
-  };
+  });
 
   async onInit() {
     const list = await this.repository.getList();
-    this.viewModelState.itemList = list;
+    state.itemList = list;
   }
 
   async onClickAddbutton() {
